@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <vector>
 #include <random>
-#include <iostream>
 
 using namespace std::chrono_literals;
 
@@ -60,7 +59,6 @@ bool changer::change_wallpaper() {
     changer::Timer t;
     while (true) {
         if (t.passed()) {
-            std::cout << "NOW" << std::endl;
             t.update();
             changer::change_wallpaper();
         }
