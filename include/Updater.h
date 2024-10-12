@@ -1,14 +1,14 @@
 #pragma once
 
+#include <string>
+#define Season std::wstring
+#define Winter L"Winter"
+#define Spring L"Spring"
+#define Summer L"Summer"
+#define Fall L"Fall"
+
 
 namespace changer {
-
-enum Season {
-  Winter = "Winter",
-  Spring = "Spring",
-  Summer = "Summer",
-  Fall = "Fall"
-};
 
 Season get_season();
 
