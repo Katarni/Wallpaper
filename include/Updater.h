@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <chrono>
+
 #define Season std::wstring
 #define Winter L"Winter"
 #define Spring L"Spring"
@@ -12,14 +14,24 @@ namespace changer {
 
 Season get_season();
 
+class Timer {
+  public:
+    Timer() = default;
+    [[nodiscard]] bool passed() const;
+    void update();
+  private:
+    std::chrono::minutes last{std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1)};
+};
+
+
 }
 
-#ifdef _WIN32
-#include <Windows.h>
 
 namespace changer {
 
+bool change_wallpaper();
+
 
 }
 
-#endif
+[[noreturn]] void circle();

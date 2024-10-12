@@ -1,7 +1,3 @@
-#include <string>
-#include <iostream>
-#include <windows.h>
-#include <filesystem>
 #include "../include/Updater.h"
 
 int main() {
@@ -14,6 +10,6 @@ int main() {
 //            (PVOID)name.c_str(),
 //            SPIF_UPDATEINIFILE | SPIF_SENDCHANGE
 //    );
-    changer::get_season();
+    circle();
     return 0;
 }
