@@ -19,7 +19,7 @@ Season changer::get_season() {
 
 bool changer::Timer::passed() const {
     std::chrono::minutes now(std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1));
-    return now - last >= 1min;
+    return now - last >= 30min;
 }
 
 void changer::Timer::update() {
