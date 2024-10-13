@@ -2,6 +2,7 @@
 #include <filesystem>
 #include <vector>
 #include <random>
+#include <thread>
 
 using namespace std::chrono_literals;
 
@@ -17,15 +18,16 @@ Season changer::get_season() {
     return Fall;
 }
 
-bool changer::Timer::passed() const {
-    std::chrono::minutes now(std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1));
-    return now - last >= 30min;
-}
-
-void changer::Timer::update() {
-    std::chrono::minutes now(std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1));
-    last = now;
-}
+// LEGACY
+//bool changer::Timer::passed() const {
+//    std::chrono::minutes now(std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1));
+//    return now - last >= 30min;
+//}
+//
+//void changer::Timer::update() {
+//    std::chrono::minutes now(std::chrono::system_clock::now().time_since_epoch() / std::chrono::minutes(1));
+//    last = now;
+//}
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -56,11 +58,8 @@ bool changer::change_wallpaper() {
 
 
 [[noreturn]] void circle() {
-    changer::Timer t;
     while (true) {
-        if (t.passed()) {
-            t.update();
-            changer::change_wallpaper();
-        }
+        changer::change_wallpaper();
+        std::this_thread::sleep_for(std::chrono::minutes(30));
     }
 }
