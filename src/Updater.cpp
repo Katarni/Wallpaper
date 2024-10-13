@@ -6,6 +6,10 @@
 
 using namespace std::chrono_literals;
 
+static const std::wstring current = std::filesystem::current_path().wstring();
+static std::random_device dev;
+static std::mt19937 generator(dev());
+
 Season changer::get_season() {
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
@@ -33,9 +37,6 @@ Season changer::get_season() {
 #include <Windows.h>
 
 bool changer::change_wallpaper() {
-    static const std::wstring current = std::filesystem::current_path().wstring();
-    static std::random_device dev;
-    static std::mt19937 generator(dev());
     std::wstring season = current + std::wstring(L"/../Seasons/") + get_season();
 
     std::vector<std::wstring> variants;
@@ -53,7 +54,25 @@ bool changer::change_wallpaper() {
             SPIF_UPDATEINIFILE | SPIF_SENDCHANGE
     );
 }
+#elif defined(__APPLE__)
+#include <cstdlib>
 
+bool changer::change_wallpaper() {
+    std::wstring season = current + std::wstring(L"/../Seasons/") + get_season();
+    std::vector<std::wstring> variants;
+
+    for (auto& i : std::filesystem::directory_iterator(season)) {
+        variants.push_back(i.path().wstring());
+    }
+
+    auto wallpaper = variants[generator() % variants.size()];
+
+    std::string command = "osascript -e 'tell application \"System Events\" "
+                          "to set picture of every desktop to \"" + wallpaper + "\"'";
+
+    system(command.c_str());
+}
+}
 #endif
 
 
