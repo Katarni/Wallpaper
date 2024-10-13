@@ -7,6 +7,7 @@ set(CMAKE_EXE_LINKER_FLAGS
         "-static -static-libgcc -static-libstdc++"
 )
 
-add_executable(season_wallpaper src/main.cpp
+add_executable(season_wallpaper WIN32 src/main.cpp
         src/Updater.cpp
-        include/Updater.h)
+        include/Updater.h
+        icon.rc)
