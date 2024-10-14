@@ -58,7 +58,7 @@ bool changer::change_wallpaper() {
 #include <cstdlib>
 
 bool changer::change_wallpaper() {
-    std::wstring season = current + std::wstring(L"/../Seasons/") + get_season();
+    std::wstring season = current + std::wstring(L"/Seasons/") + get_season();
     std::vector<std::wstring> variants;
 
     for (auto& i : std::filesystem::directory_iterator(season)) {
