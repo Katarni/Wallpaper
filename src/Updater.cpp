@@ -67,12 +67,12 @@ bool changer::change_wallpaper() {
 
     auto wallpaper = variants[generator() % variants.size()];
 
-    std::string command = "osascript -e 'tell application \"System Events\" "
-                          "to set picture of every desktop to \"" + wallpaper + "\"'";
+    std::wstring command = L"osascript -e 'tell application \"System Events\" "
+                          "to set picture of every desktop to \"" + wallpaper + L"\"'";
 
-    system(command.c_str());
+    return system(std::string(command.begin(), command.end()).c_str());
 }
-}
+
 #endif
 
 
